@@ -7,10 +7,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tareas: [],
+    tarea:{}
   },
   mutations: {
     setTareas(state, tareas){
       state.tareas = tareas
+    },
+    setTarea(state,tarea){
+      state.tarea = tarea
     }
   },
   actions: {
@@ -27,6 +31,17 @@ export default new Vuex.Store({
       });
 
       commit('setTareas', tareas)
+    },
+
+    getTarea: async ({commit}, id) => {
+
+      const doc = await db.collection('tareas').doc(id).get()
+
+      commit('setTarea', {
+        id: doc.id,
+        ...doc.data(),
+      })
+
     }
 
   },
