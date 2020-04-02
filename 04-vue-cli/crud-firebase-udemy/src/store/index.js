@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import db from '../firebase'
+import router from '../router/index'
 
 Vue.use(Vuex)
 
@@ -42,6 +43,15 @@ export default new Vuex.Store({
         ...doc.data(),
       })
 
+    },
+
+    editarTarea({commit}, {id, nombre}){
+      db.collection('tareas').doc(id).update({
+        nombre
+      })
+      .then(() => {
+        router.push({name:'inicio'})
+      })
     }
 
   },
