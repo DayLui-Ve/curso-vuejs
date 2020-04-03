@@ -14,6 +14,11 @@ const routes = [
     name: 'editar',
     component: () => import(/* webpackChunkName: "inicio" */ '../views/Editar.vue')
   },
+  {
+    path: '/agregar',
+    name: 'agregar',
+    component: () => import(/* webpackChunkName: "inicio" */ '../views/Agregar.vue')
+  },
 ]
 
 const router = new VueRouter({
