@@ -25,19 +25,17 @@ Vue.config.productionTip = false
 
 firebase.auth().onAuthStateChanged(user => {
   console.log(user)
-  console.log(user.email)
-  console.log(user.uid)
   if (user) {
     const { email, uid } = user
     store.dispatch('detectarUsuario', { email, uid })
   }else{
-    
+    store.dispatch('detectarUsuario', null)
   }
 
-})
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+})
