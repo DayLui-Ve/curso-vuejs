@@ -29,6 +29,11 @@ Vue.use(VueRouter)
     name: 'Form',
     component: () => import(/* webpackChunkName: "Form" */ '../views/Form.vue')
   },
+  {
+    path: '/vuelidate',
+    name: 'Vuelidate',
+    component: () => import(/* webpackChunkName: "Vuelidate" */ '../views/Vuelidate.vue')
+  },
 ]
 
 const router = new VueRouter({
