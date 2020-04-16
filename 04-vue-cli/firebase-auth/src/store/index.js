@@ -25,6 +25,7 @@ export default new Vuex.Store({
     error: '',
     tareas: [],
     tarea: {},
+    carga:false,
   },
   mutations: {
 
@@ -47,6 +48,10 @@ export default new Vuex.Store({
         return item.id !== id
       })
     },
+
+    cargarFirebase(state, payload){
+      state.carga = payload
+    }
 
   },
   actions: {
@@ -98,14 +103,19 @@ export default new Vuex.Store({
 
     getTareas: async ({ commit, state }) => {
       let tareas = []
+
+      commit('cargarFirebase', true)
+
       const snapshots = await db.collection(state.usuario.email).get()
 
-      snapshots.forEach(doc => {
+      await snapshots.forEach(doc => {
         tareas.push({
           id: doc.id,
           ...doc.data(),
         })
       });
+      
+      commit('cargarFirebase', false)
 
       commit('setTareas', tareas)
     },

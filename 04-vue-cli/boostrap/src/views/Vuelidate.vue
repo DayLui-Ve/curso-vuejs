@@ -2,13 +2,13 @@
     <div class="mt-5">
         <h1>Vuelidate</h1>
 
-        <form>
+        <form @submit.prevent="submit">
 
             <input 
                 type="email"
                 placeholder="Ingresa un email" 
                 class="form-control my-3"
-                v-model="$v.email.$model"
+                v-model.lazy="$v.email.$model"
                 :class="{'is-invalid': $v.email.$error}"
                 >
 
@@ -28,6 +28,10 @@
                 <p class="text-danger" v-if="!$v.repeatPassword.sameAsPassword">Contraseña incorrecta</p>
                 <!-- <p>{{$v.repeatPassword}}</p> -->
 
+            <b-button variant="primary" type="submit" :disabled="$v.$invalid" >Enviar</b-button>
+
+            <p>{{$v.$invalid}}</p>
+            <p>{{$v}}</p>
         </form>
 
     </div>
@@ -53,6 +57,19 @@ export default {
         },
         repeatPassword: {
             sameAsPassword: sameAs('password')
+        }
+    },
+    methods: {
+        submit(){
+            console.log('submit!')
+            this.$v.$touch()
+            if (this.$v.$invalid) {
+                // this.submitStatus = 'ERROR'
+                console.log('Se generó error')
+            } else {
+                console.log('Todos los campos correctos')
+                console.log('datos', { email: this.$v.email.$model, password: this.$v.password.$model  })
+            }
         }
     }
 }
